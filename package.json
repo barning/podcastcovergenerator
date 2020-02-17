@@ -1,0 +1,28 @@
+{
+  "name": "halbwissencover",
+  "version": "0.0.1",
+  "description": "Generator for the podcast \"Gefährliches Halbwissen\"",
+  "main": "index.js",
+  "dependencies": {},
+  "scripts": {
+    "start": "browser-sync start -s 'app' 'node_modules' -f 'app' 'node_modules'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barning/halbwissencover.git"
+  },
+  "keywords": [
+    "cover",
+    "generator",
+    "p5js"
+  ],
+  "author": "Niklas Barning",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/barning/halbwissencover/issues"
+  },
+  "homepage": "https://github.com/barning/halbwissencover#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}
