@@ -22,10 +22,18 @@ function setup() {
     colorPicker = createColorPicker('#ec5f6b');
     colorPicker.input(drawCover);
 
+    c.drop(gotFile);
+
     imageMode(CENTER);
   } 
   
-  function draw() { 
+  function draw() {
+    background(200);
+    textSize(200);
+    text(
+      'Drop image or paste URL, them choose color with color picker an click "Generate Cover"',
+      100,500,width-100, height-100
+    );
     noLoop();
   }
 
@@ -55,3 +63,12 @@ function setup() {
   function inputTyping() {
     imageURL = this.value();
   }
+
+function gotFile(file) {
+  // If it's an image file
+  if (file.type === 'image') {
+    img = loadImage(file.data, imageReady);
+  } else {
+    console.log('Not an image file!');
+  }
+}
