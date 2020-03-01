@@ -11,6 +11,11 @@ input {
     margin-top: 1rem;
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+}
+
 /*
     Sorry its just for looking nice
 */
