@@ -26,7 +26,7 @@ function setup() {
     
     colorPicker = createColorPicker('#ec5f6b');
     additionalDiv.child(colorPicker);
-    colorPicker.input(drawCover);
+    colorPicker.changed(drawCover);
     
     checkbox = createCheckbox('Show Podcast Logo', true);
     additionalDiv.child(checkbox);
