@@ -13,10 +13,9 @@ function preload() {
 function setup() { 
     c = createCanvas(3000, 3000);
     c.parent('canvas');
-
-    manageUIElements();
-
     c.drop(gotFile);
+  
+    manageUIElements();
 
     imageMode(CENTER);
   } 
