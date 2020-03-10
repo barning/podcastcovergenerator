@@ -10,6 +10,8 @@ package-lock.json
 
 .DS_Store
 
+app/main.js
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
