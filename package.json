@@ -4,7 +4,7 @@
   "description": "Generator for the podcast \"Gefährliches Halbwissen\"",
   "main": "index.js",
   "scripts": {
-    "start": "rollup -c"
+    "start": "rollup -c -w"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,4 @@
 import 'p5';
-import { preload, setup } from './sketch';
+import { s } from './sketch';
 
-window.preload = preload
-
-window.setup = () => {
-  setup()
-}
+new p5(s);
