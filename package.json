@@ -28,6 +28,7 @@
     "p5": "^1.0.0",
     "rollup": "^2.0.2",
     "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-browsersync": "^1.1.0"
+    "rollup-plugin-browsersync": "^1.1.0",
+    "rollup-plugin-uglify": "^6.0.4"
   }
 }

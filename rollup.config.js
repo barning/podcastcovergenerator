@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import browsersync from 'rollup-plugin-browsersync';
+import { uglify } from "rollup-plugin-uglify";
 
 module.exports = {
   input: 'js/main.js',
@@ -14,6 +15,7 @@ module.exports = {
     babel({
       exclude: 'node_modules/**'
     }),
-    browsersync({server: 'app'})
+    browsersync({ server: 'app' }),
+    uglify()
   ]
 };
