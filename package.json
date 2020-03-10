@@ -4,7 +4,8 @@
   "description": "Generator for the podcast \"Gefährliches Halbwissen\"",
   "main": "index.js",
   "scripts": {
-    "start": "rollup -c -w"
+    "start": "rollup -c -w",
+    "deploy": "gh-pages -d app"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "@rollup/plugin-node-resolve": "^7.1.1",
+    "gh-pages": "^2.2.0",
     "p5": "^1.0.0",
     "rollup": "^2.0.2",
     "rollup-plugin-babel": "^4.4.0",
