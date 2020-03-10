@@ -3,8 +3,8 @@ export const s = (sketch) => {
   let logo;
   let c;
   let colorPickerColor;
-  let showLogo = true;
-  let showTint = true;
+  let showLogo = false;
+  let showTint = false;
 
   sketch.preload = () => {
     logo = sketch.loadImage('./img/logo.png');
