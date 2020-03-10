@@ -5,11 +5,11 @@ let colorPickerColor;
 let showLogo = true;
 let showTint = true;
 
-function preload() {
+export function preload() {
   logo = loadImage('./img/logo.png');
 }
 
-function setup() {
+export function setup() {
   c = createCanvas(3000, 3000);
   c.parent('canvas');
   c.drop(gotFile);
