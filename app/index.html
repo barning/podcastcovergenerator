@@ -14,24 +14,23 @@
 
     <div class="app grid">
         <div id="canvas"></div>
-        <div class="controls">
+        <div class="controls grid-row-1">
             <h3>Data Input</h3>
             <div class="controls__datainput--cover flex-col">
                 <label for="cover-input">URL for Cover</label>
-                <input id="cover-input" class="input" type="text">
-                <button id="load-cover">Load Cover</button>
+                <input id="cover-input" class="input" type="file" accept=".jpg, .jpeg, .png">
             </div>
 
             <div class="controls__datainput--logo flex-col">
                 <label for="logo-input">URL for Logo</label>
-                <input id="logo-input" class="input" type="text">
-                <button id="load-logo">Load Logo</button>
+                <input id="logo-input" class="input" type="file">
             </div>
+        </div>
 
-            
+        <div class="controls grid-row-2">
+            <h3>Modifier Controls</h3>
+
             <div class="controls__modifier flex-col hide">
-                <h3>Modifier Controls</h3>
-
                 <div class="controls__color flex-col">
                     <label for="color-input">Tint Color</label>
                     <input id="color-input" type="color" value="#7f3af6">

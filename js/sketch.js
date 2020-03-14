@@ -1,14 +1,10 @@
 export const s = (sketch) => {
-  let img;
+  let cover;
   let logo;
   let c;
   let colorPickerColor;
   let showLogo = false;
   let showTint = false;
-
-  sketch.preload = () => {
-    logo = sketch.loadImage('./img/logo.png');
-  };
 
   sketch.setup = () => {
     c = sketch.createCanvas(3000, 3000);
@@ -19,20 +15,41 @@ export const s = (sketch) => {
 
     sketch.imageMode(sketch.CENTER);
 
-    sketch.background(255);
-    sketch.textSize(200);
-    sketch.text(
-      'Drop image or paste URL, them choose color with color picker an click "Generate Cover"',
-      100, 500, sketch.width - 100, sketch.height - 100
-    );
+    initialDraw();
+
   };
+  
+  function initialDraw() {
+    const coverData = sketch.getItem('coverData');
+    const logoData = sketch.getItem('logoData');
+
+    if (coverData === null) {
+      sketch.background(255);
+      sketch.textSize(200);
+      sketch.text(
+        'Drop image or paste URL, them choose color with color picker an click "Generate Cover"',
+        100, 500, sketch.width - 100, sketch.height - 100
+      );
+    } else {
+      if (coverData) {
+        console.log(coverData);
+        
+        cover = sketch.loadImage(URL.createObjectURL(coverData), imageReady);
+      }
+
+      if (logoData) {
+        logo = sketch.loadImage(URL.createObjectURL(logoData), imageReady);
+      }
+      drawCover();
+    }
+  }
 
   function manageUIElements() {
-    const loadCoverButton = document.querySelector('#load-cover');
-    loadCoverButton.addEventListener('click', insertCoverFromInput);
+    const coverloader = document.querySelector('#cover-input');
+    coverloader.addEventListener('change', insertCoverFromInput);
 
-    const loadLogoButton = document.querySelector('#load-logo');
-    loadLogoButton.addEventListener('click', insertLogoFromInput);
+    const logoloader = document.querySelector('#logo-input');
+    logoloader.addEventListener('change', insertLogoFromInput);
 
     const colorPicker = document.querySelector('#color-input');
     colorPickerColor = colorPicker.value
@@ -59,23 +76,23 @@ export const s = (sketch) => {
 
   function drawCover() {
     sketch.clear();
-    if (img) {
+    if (cover) {
       if (showTint) {
-        img.filter(sketch.GRAY);
+        cover.filter(sketch.GRAY);
       }
 
       // Check the aspect ratio of the image
-      if (img.height > img.width) {
-        img.resize(sketch.width, 0);
+      if (cover.height > cover.width) {
+        cover.resize(sketch.width, 0);
       } else {
-        img.resize(0, sketch.height);
+        cover.resize(0, sketch.height);
       }
 
       if (showTint) {
         sketch.tint(colorPickerColor);
       }
 
-      sketch.image(img, sketch.width / 2, sketch.height / 2);
+      sketch.image(cover, sketch.width / 2, sketch.height / 2);
     }
 
     sketch.noTint();
@@ -95,16 +112,19 @@ export const s = (sketch) => {
     drawCover();
   }
 
-  function insertCoverFromInput(e) {
-    const val = e.target.parentNode.querySelector('input').value;
-
-    img = sketch.loadImage(val, imageReady);
+  function insertCoverFromInput(file) {
+    const data = file.target.files[0];
+    console.log(data);
+    
+    cover = sketch.loadImage(URL.createObjectURL(data), imageReady);
+    console.log(data);
+    sketch.storeItem('coverData', data);
   }
 
-  function insertLogoFromInput(e) {
-    const val = e.target.parentNode.querySelector('input').value;
-
-    logo = sketch.loadImage(val, imageReady);
+  function insertLogoFromInput(file) {
+    const data = file.target.files[0];
+    logo = sketch.loadImage(URL.createObjectURL(data), imageReady);
+    sketch.storeItem('logoData', data);
   }
 
   function getColorPickerColor(e) {
@@ -124,7 +144,7 @@ export const s = (sketch) => {
 
   function gotFile(file) {
     if (file.type === 'image') {
-      img = sketch.loadImage(file.data, imageReady);
+      cover = sketch.loadImage(file.data, imageReady);
     } else {
       console.log('Not an image file!');
     }
