@@ -1,5 +1,5 @@
 export const s = (sketch) => {
-  let img;
+  let cover;
   let logo;
   let c;
   let colorPickerColor;
@@ -28,11 +28,11 @@ export const s = (sketch) => {
   };
 
   function manageUIElements() {
-    const loadCoverButton = document.querySelector('#load-cover');
-    loadCoverButton.addEventListener('click', insertCoverFromInput);
+    const coverloader = document.querySelector('#cover-input');
+    coverloader.addEventListener('change', insertCoverFromInput);
 
-    const loadLogoButton = document.querySelector('#load-logo');
-    loadLogoButton.addEventListener('click', insertLogoFromInput);
+    const logoloader = document.querySelector('#logo-input');
+    logoloader.addEventListener('change', insertLogoFromInput);
 
     const colorPicker = document.querySelector('#color-input');
     colorPickerColor = colorPicker.value
@@ -46,7 +46,6 @@ export const s = (sketch) => {
 
     const generateButton = document.querySelector('#generate-button');
     generateButton.addEventListener('click', generateCover);
-
   }
 
   sketch.draw = () => {
@@ -59,23 +58,23 @@ export const s = (sketch) => {
 
   function drawCover() {
     sketch.clear();
-    if (img) {
+    if (cover) {
       if (showTint) {
-        img.filter(sketch.GRAY);
+        cover.filter(sketch.GRAY);
       }
 
       // Check the aspect ratio of the image
-      if (img.height > img.width) {
-        img.resize(sketch.width, 0);
+      if (cover.height > cover.width) {
+        cover.resize(sketch.width, 0);
       } else {
-        img.resize(0, sketch.height);
+        cover.resize(0, sketch.height);
       }
 
       if (showTint) {
         sketch.tint(colorPickerColor);
       }
 
-      sketch.image(img, sketch.width / 2, sketch.height / 2);
+      sketch.image(cover, sketch.width / 2, sketch.height / 2);
     }
 
     sketch.noTint();
@@ -95,16 +94,14 @@ export const s = (sketch) => {
     drawCover();
   }
 
-  function insertCoverFromInput(e) {
-    const val = e.target.parentNode.querySelector('input').value;
-
-    img = sketch.loadImage(val, imageReady);
+  function insertCoverFromInput(file) {
+    const data = URL.createObjectURL(file.target.files[0]);
+    cover = sketch.loadImage(data, imageReady);
   }
 
-  function insertLogoFromInput(e) {
-    const val = e.target.parentNode.querySelector('input').value;
-
-    logo = sketch.loadImage(val, imageReady);
+  function insertLogoFromInput(file) {
+    const data = URL.createObjectURL(file.target.files[0]);
+    logo = sketch.loadImage(data, imageReady);
   }
 
   function getColorPickerColor(e) {
@@ -124,7 +121,7 @@ export const s = (sketch) => {
 
   function gotFile(file) {
     if (file.type === 'image') {
-      img = sketch.loadImage(file.data, imageReady);
+      cover = sketch.loadImage(file.data, imageReady);
     } else {
       console.log('Not an image file!');
     }

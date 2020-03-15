@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,30 +9,30 @@
     <title>Gefährliches Halbwissen – Cover Generator</title>
 
 </head>
+
 <body>
 
     <h1>Podcast Cover Generator</h1>
 
     <div class="app grid">
         <div id="canvas"></div>
-        <div class="controls">
+        <div class="controls grid-row-1">
             <h3>Data Input</h3>
             <div class="controls__datainput--cover flex-col">
                 <label for="cover-input">URL for Cover</label>
-                <input id="cover-input" class="input" type="text">
-                <button id="load-cover">Load Cover</button>
+                <input id="cover-input" class="input" type="file" accept=".jpg, .jpeg, .png">
             </div>
 
             <div class="controls__datainput--logo flex-col">
                 <label for="logo-input">URL for Logo</label>
-                <input id="logo-input" class="input" type="text">
-                <button id="load-logo">Load Logo</button>
+                <input id="logo-input" class="input" type="file">
             </div>
+        </div>
 
-            
+        <div class="controls grid-row-2">
+            <h3>Modifier Controls</h3>
+
             <div class="controls__modifier flex-col hide">
-                <h3>Modifier Controls</h3>
-
                 <div class="controls__color flex-col">
                     <label for="color-input">Tint Color</label>
                     <input id="color-input" type="color" value="#7f3af6">
@@ -41,18 +42,19 @@
                     <input type="checkbox" id="showTint">
                     <label for="showTint">Tint Image</label>
                 </div>
-    
+
                 <div class="controls_showLogo">
                     <input type="checkbox" id="showLogoCheckbox">
                     <label for="showLogoCheckbox">Show Logo</label>
                 </div>
-                
+
                 <button id="generate-button">Generate Cover</button>
             </div>
 
 
         </div>
     </div>
-    
+
 </body>
+
 </html>
