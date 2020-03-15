@@ -13,6 +13,7 @@ body {
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-gap: 20px;
 }
 
@@ -25,10 +26,32 @@ body {
     flex-direction: column;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.grid-row-1 {
+    grid-row: 1;
+}
+
+.grid-row-2 {
+    grid-row: 2;
+}
+
+label {
+    margin-bottom: .5rem;
+}
+
 .controls {
+    grid-column: 2;
     background-color:white;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
     box-shadow: 0 5px 10px #00000017;
+}
+
+.controls h3 {
+    margin-top: 1rem;
 }
 
 .controls > div {
@@ -41,11 +64,9 @@ body {
 
 #canvas {
     grid-column: 1;
+    grid-row: 1 / 3;
 }
 
-.controls {
-    grid-column: 2;
-}
 
 /*
     Sorry its just for looking nice
