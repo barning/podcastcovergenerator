@@ -31,14 +31,15 @@ export const s = (sketch) => {
         100, 500, sketch.width - 100, sketch.height - 100
       );
     } else {
+      // const fileReader = new FileReader();
       if (coverData) {
-        console.log(coverData);
+        // console.log(fileReader.readAsText(coverData));
         
-        cover = sketch.loadImage(URL.createObjectURL(coverData), imageReady);
+        cover = sketch.loadImage(coverData, imageReady);
       }
 
       if (logoData) {
-        logo = sketch.loadImage(URL.createObjectURL(logoData), imageReady);
+        logo = sketch.loadImage(logoData, imageReady);
       }
       drawCover();
     }
@@ -93,6 +94,8 @@ export const s = (sketch) => {
       }
 
       sketch.image(cover, sketch.width / 2, sketch.height / 2);
+      console.log(sketch.get());
+      
     }
 
     sketch.noTint();
@@ -113,18 +116,17 @@ export const s = (sketch) => {
   }
 
   function insertCoverFromInput(file) {
-    const data = file.target.files[0];
-    console.log(data);
+    const data = URL.createObjectURL(file.target.files[0]);
     
-    cover = sketch.loadImage(URL.createObjectURL(data), imageReady);
-    console.log(data);
-    sketch.storeItem('coverData', data);
+    cover = sketch.loadImage(data, imageReady);
+    // sketch.storeItem('coverData', data);
   }
 
   function insertLogoFromInput(file) {
-    const data = file.target.files[0];
-    logo = sketch.loadImage(URL.createObjectURL(data), imageReady);
-    sketch.storeItem('logoData', data);
+    const data = URL.createObjectURL(file.target.files[0]);
+
+    logo = sketch.loadImage(data, imageReady);
+    // sketch.storeItem('logoData', data);
   }
 
   function getColorPickerColor(e) {
