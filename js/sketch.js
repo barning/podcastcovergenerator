@@ -53,7 +53,10 @@ export const s = (sketch) => {
   }
 
   function generateCover() {
+    sketch.pixelDensity(1);
+    drawCover();
     sketch.saveCanvas(c, 'cover', 'jpg');
+    sketch.pixelDensity();
   }
 
   function drawCover() {
