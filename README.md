@@ -6,3 +6,5 @@ More features will be added bit by bit, but first my own requirements have to be
 
 ## Development
 Your need nvm, npm and node. First type `nvm use`, them `npm install` and then `npm start` in your CLI to start the service locally. For deployment type `npm deploy`.
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W71CQ36)
