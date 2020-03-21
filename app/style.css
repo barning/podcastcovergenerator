@@ -55,11 +55,18 @@ label {
 }
 
 .controls > div {
-    margin-top: 1.5rem;
+    margin-top: .5rem;
+}
+.controls__modifier > * {
+    margin-top: .5rem;
 }
 
 .hide {
     visibility: hidden;
+}
+
+#errormessage {
+    color: red;
 }
 
 #canvas {
