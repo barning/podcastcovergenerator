@@ -1,49 +1,25 @@
 export const s = (sketch) => {
-  let cover;
-  let logo;
-  let c;
-  let colorPickerColor;
+  let c, cover, logo, colorPickerColor;
+
   let showLogo = false;
   let showTint = false;
+
+  // Variables for storage
+  let coverData, logoData, showTintData, showLogoData, colorPickerColorData;
 
   sketch.setup = () => {
     c = sketch.createCanvas(3000, 3000);
     c.parent('canvas');
     c.drop(gotFile);
 
-    manageUIElements();
-
+    
     sketch.imageMode(sketch.CENTER);
-
+    
+    getDataFromStorage();
+    manageUIElements();
     initialDraw();
 
   };
-  
-  function initialDraw() {
-    const coverData = sketch.getItem('coverData');
-    const logoData = sketch.getItem('logoData');
-
-    if (coverData === null) {
-      sketch.background(255);
-      sketch.textSize(200);
-      sketch.text(
-        'Drop image or paste URL, them choose color with color picker an click "Generate Cover"',
-        100, 500, sketch.width - 100, sketch.height - 100
-      );
-    } else {
-      // const fileReader = new FileReader();
-      if (coverData) {
-        // console.log(fileReader.readAsText(coverData));
-        
-        cover = sketch.loadImage(coverData, imageReady);
-      }
-
-      if (logoData) {
-        logo = sketch.loadImage(logoData, imageReady);
-      }
-      drawCover();
-    }
-  }
 
   function manageUIElements() {
     const coverloader = document.querySelector('#cover-input');
@@ -52,20 +28,54 @@ export const s = (sketch) => {
     const logoloader = document.querySelector('#logo-input');
     logoloader.addEventListener('change', insertLogoFromInput);
 
-    const colorPicker = document.querySelector('#color-input');
-    colorPickerColor = colorPicker.value
+    let colorPicker = document.querySelector('#color-input');
+    if (colorPickerColor === undefined) colorPickerColor = sketch.color(255,100,50);
+    colorPicker.value = colorPickerColor.toString('#rrggbb');
     colorPicker.addEventListener('change', getColorPickerColor);
 
-    const showTint = document.querySelector('#showTint');
-    showTint.addEventListener('change', tintCheckboxChanged);
+    let showTintCheckbox = document.querySelector('#showTint');
+    showTintCheckbox.checked = showTint;
+    showTintCheckbox.addEventListener('change', tintCheckboxChanged);
 
-    const showLogoCheckbox = document.querySelector('#showLogoCheckbox');
+    let showLogoCheckbox = document.querySelector('#showLogoCheckbox');
+    showLogoCheckbox.checked = showLogo;
     showLogoCheckbox.addEventListener('change', logoCheckboxChanged);
 
     const generateButton = document.querySelector('#generate-button');
     generateButton.addEventListener('click', generateCover);
-
   }
+
+  function getDataFromStorage() {
+    coverData = sketch.getItem('coverData');
+    logoData = sketch.getItem('logoData');
+    showTintData = sketch.getItem('showTintData');
+    showLogoData = sketch.getItem('showLogoData');
+    colorPickerColorData = sketch.getItem('colorPickerColorData');
+
+    if (coverData) cover = sketch.loadImage(coverData, imageReady);
+    if (logoData) logo = sketch.loadImage(logoData, imageReady);
+    if (showTintData) {
+      showTint = showTintData;
+      manageColorPickerVisibility();
+    }
+      
+    if (showLogoData) showLogo = showLogoData;
+    if (colorPickerColorData) colorPickerColor = colorPickerColorData;
+  }
+  
+  function initialDraw() {
+    if (coverData === null) {
+      sketch.background(255);
+      sketch.textSize(200);
+      sketch.text(
+        'Drop image or paste URL, them choose color with color picker an click "Generate Cover"',
+        100, 500, sketch.width - 100, sketch.height - 100
+      );
+    } else {
+      drawCover();
+    }
+  }
+
 
   sketch.draw = () => {
     sketch.noLoop();
@@ -80,6 +90,7 @@ export const s = (sketch) => {
     if (cover) {
       if (showTint) {
         cover.filter(sketch.GRAY);
+        sketch.tint(colorPickerColor)
       }
 
       // Check the aspect ratio of the image
@@ -89,18 +100,14 @@ export const s = (sketch) => {
         cover.resize(0, sketch.height);
       }
 
-      if (showTint) {
-        sketch.tint(colorPickerColor);
-      }
-
-      sketch.image(cover, sketch.width / 2, sketch.height / 2);
-      console.log(sketch.get());
-      
+      sketch.image(cover, sketch.width / 2, sketch.height / 2);      
+    } else {
+      sketch.background(255);
     }
 
     sketch.noTint();
 
-    if (showLogo) {
+    if (showLogo && logo) {
       if (logo.height < logo.width) {
         logo.resize(sketch.width - 300, 0);
       } else {
@@ -117,31 +124,56 @@ export const s = (sketch) => {
 
   function insertCoverFromInput(file) {
     const data = URL.createObjectURL(file.target.files[0]);
-    
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      sketch.storeItem('coverData', reader.result);
+    }, false);
+
+    reader.readAsDataURL(file.target.files[0]);
     cover = sketch.loadImage(data, imageReady);
-    // sketch.storeItem('coverData', data);
   }
 
   function insertLogoFromInput(file) {
     const data = URL.createObjectURL(file.target.files[0]);
+    const reader = new FileReader();
 
+    reader.addEventListener("load", function () {
+      // convert image file to base64 string
+      sketch.storeItem('logoData', reader.result);
+    }, false);
+
+    reader.readAsDataURL(file.target.files[0]);
     logo = sketch.loadImage(data, imageReady);
-    // sketch.storeItem('logoData', data);
+
+    document.querySelector('#showLogoCheckbox').checked = true;
+
+    showLogo = true;
+    sketch.storeItem('showLogoData', showLogo);
   }
 
   function getColorPickerColor(e) {
     colorPickerColor = e.target.value;
+    sketch.storeItem('colorPickerColorData', colorPickerColor);
     drawCover();
   }
 
   function logoCheckboxChanged() {
     showLogo = !showLogo;
+    sketch.storeItem('showLogoData', showLogo);
     drawCover();
   }
 
   function tintCheckboxChanged() {
     showTint = !showTint;
+    sketch.storeItem('showTintData', showTint);
+    manageColorPickerVisibility();
     drawCover();
+  }
+
+  function manageColorPickerVisibility() {
+    document.querySelector('.controls__color').classList.toggle('hide');
   }
 
   function gotFile(file) {
