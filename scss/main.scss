@@ -1,3 +1,4 @@
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     display: flex;
@@ -19,16 +20,16 @@ body {
 
 .flex {
     display: flex;
-}
+    
+    &-col {
+        display: flex;
+        flex-direction: column;
+    }
 
-.flex-col {
-    display: flex;
-    flex-direction: column;
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
+    &-row {
+        display: flex;
+        flex-direction: row;
+    }
 }
 
 .grid-row-1 {
@@ -48,17 +49,18 @@ label {
     background-color:white;
     padding: 0 1rem 1rem 1rem;
     box-shadow: 0 5px 10px #00000017;
-}
 
-.controls h3 {
-    margin-top: 1rem;
-}
+    h3 {
+        margin-top: 1rem;
+    }
 
-.controls > div {
-    margin-top: .5rem;
-}
-.controls__modifier > * {
-    margin-top: .5rem;
+    > div {
+        margin-top: .5rem;
+    }    
+
+    &__modifier > * {
+        margin-top: .5rem;
+    }    
 }
 
 .hide {
@@ -73,7 +75,6 @@ label {
     grid-column: 1;
     grid-row: 1 / 3;
 }
-
 
 /*
     Sorry its just for looking nice
