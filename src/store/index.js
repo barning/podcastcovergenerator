@@ -5,19 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    showLogo: false,
-    showTint: false,
-    images: []
+    images: [
+    ]
   },
   mutations: {
     addImage (state, Image) {
       state.images.push(Image)
-    },
-    toggleLogo (state) {
-      state.showLogo = !state.showLogo
-    },
-    toggleTint (state) {
-      state.showTint = !state.showTint
+    }
+  },
+  getters: {
+    imageSrc: state => {
+      return state.images.filter(image => image.src)
     }
   },
   actions: {

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app" id="app">
     <Sketch/>
     <Modifier/>
     <ImageManager/>
@@ -29,5 +29,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.app {
+  display: flex;
 }
 </style>

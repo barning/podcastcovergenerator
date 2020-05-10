@@ -1,5 +1,5 @@
 <template>
-  <div id="ImageManager">
+  <div class="image-manager" id="ImageManager">
     <ImageUpload/>
     <ImageLayer/>
   </div>
@@ -17,3 +17,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.image-manager {
+  width: 300px;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-    <vue-p5 v-on="{setup, draw}" :key="tint"></vue-p5>
+    <vue-p5 v-on="{setup, draw}"></vue-p5>
 </template>
 
 <script>
@@ -12,31 +12,45 @@ export default {
   },
   data () {
     return {
-      tint: false
+      s: null,
+      images: []
     }
   },
   computed: {
-    isTintShown () {
-      return this.$store.state.showTint
+    imagesUpdated () {
+      return this.$store.state.images
     }
   },
   watch: {
-    isTintShown () {
-      this.tint = !this.tint
+    imagesUpdated () {
+      if (this.$store.state.images.length >= 0) {
+        for (let i = 0; i < this.$store.state.images.length; i++) {
+          this.s.loadImage(this.$store.state.images[i].src, this.imageReady)
+        }
+      }
     }
   },
   methods: {
     setup (s) {
+      this.s = s
       s.createCanvas(500, 500)
       s.noLoop()
     },
     draw (s) {
       s.background('green')
       s.text('Hello p5!', 20, 20)
-
-      if (this.tint === true) {
-        s.background('red')
-      }
+      this.images.forEach(image => {
+        if (image.height > image.width) {
+          image.resize(s.width, 0)
+        } else {
+          image.resize(0, s.height)
+        }
+        s.image(image, 0, 0)
+      })
+    },
+    imageReady (img) {
+      this.images.push(img)
+      this.draw(this.s)
     }
   },
   render (s) {
