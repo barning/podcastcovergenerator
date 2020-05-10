@@ -1,8 +1,10 @@
 <template>
   <div class="image-layers" id="ImageLayers">
     <ul>
-      <li v-for="item in imageSrc" :key="item.src">
-        <img :src="item.src">
+      <li v-for="(item, index) in imageSrc" :key="item.src">
+        <div v-on:click="setItemActive(index)" class="image-layers__layer">
+          <img :src="item.src">
+        </div>
       </li>
     </ul>
   </div>
@@ -10,10 +12,16 @@
 
 <script>
 export default {
-  name: 'ImageLayer',
+  name: 'ImageLayers',
   computed: {
     imageSrc () {
       return this.$store.getters.imageSrc
+    }
+  },
+  methods: {
+    setItemActive (i) {
+      this.$store.commit('setAllImagesInactive')
+      this.$store.commit('setImageActive', i)
     }
   }
 }

@@ -8,7 +8,7 @@
       button-class="btn"
       :hideChangeButton="true"
       :custom-strings="{
-        drag: 'Add an Image'
+        drag: 'Upload an image by clicking this area or drop a file'
       }"
       @change="onChange">
     </picture-input>

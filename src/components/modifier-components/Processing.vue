@@ -2,7 +2,7 @@
   <div id="Processing">
     <div class="controls_showTint flex-row">
       <div>
-        <input v-on:click="manageTintVisibility" type="checkbox" id="showTint">
+        <input type="checkbox" id="showTint" :value="tintVisibility" @input="updateTintVisibility">
         <label for="showTint">Tint Image</label>
       </div>
 
@@ -10,9 +10,9 @@
         <input id="color-input" type="color" value="#7f3af6">
       </div>
 
-      <div class="controls_showLogo">
-        <input v-on:click="manageLogoVisibility" type="checkbox" id="showLogo">
-        <label for="showLogoCheckbox">Show Logo</label>
+      <div class="controls_showImage">
+        <input type="checkbox" id="showImage" :value="imageVisibility" @input="updateImageVisibility">
+        <label for="checkbox">Image is visible</label>
       </div>
     </div>
   </div>
@@ -22,12 +22,28 @@
 
 export default {
   name: 'Processing',
+  props: [
+    'index',
+    'tint',
+    'showTint',
+    'showImage'
+  ],
+  data () {
+    return {
+      imageVisibility: this.showImage,
+      tintVisibility: this.showTint,
+      imageTint: this.tint
+    }
+  },
   methods: {
-    manageTintVisibility: function (event) {
-      this.$store.commit('toggleTint')
+    updateImageVisibility (e) {
+      this.$store.commit('updateImageVisibility', this.index)
     },
-    manageLogoVisibility: function (event) {
-      this.$store.commit('toggleLogo')
+    updateTintVisibility (e) {
+      this.$store.commit('updateTintVisibility', this.index)
+    },
+    updateTint (e) {
+      this.$store.commit('updateTint', this.index)
     }
   }
 }

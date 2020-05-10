@@ -1,19 +1,19 @@
 <template>
   <div class="image-manager" id="ImageManager">
     <ImageUpload/>
-    <ImageLayer/>
+    <ImageLayers/>
   </div>
 </template>
 
 <script>
 import ImageUpload from './imageManager-components/ImageUpload.vue'
-import ImageLayer from './imageManager-components/ImageLayer.vue'
+import ImageLayers from './imageManager-components/ImageLayers.vue'
 
 export default {
   name: 'ImageManager',
   components: {
     ImageUpload,
-    ImageLayer
+    ImageLayers
   }
 }
 </script>

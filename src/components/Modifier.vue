@@ -2,7 +2,7 @@
   <div id="modifier">
     <Position/>
     <Scale/>
-    <Processing/>
+    <Processing v-bind:index="this.index"/>
   </div>
 </template>
 
@@ -17,6 +17,14 @@ export default {
     Position,
     Scale,
     Processing
+  },
+  props: [
+    'index'
+  ],
+  computed: {
+    activeImage () {
+      return this.$store.getters.activeImage
+    }
   }
 }
 </script>
