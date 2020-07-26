@@ -7,7 +7,7 @@
       </div>
 
       <div class="controls__color hide">
-        <color-picker :initially-collapsed="true" @select="updateTint" />
+        <color-picker :initially-collapsed="true" @input="updateTint" />
       </div>
     </div>
   </div>
