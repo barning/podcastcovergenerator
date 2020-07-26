@@ -13,21 +13,42 @@ export default {
   data () {
     return {
       s: null,
-      images: []
+      images: [],
+      tintVisible: false,
+      tintHue: null
     }
   },
   computed: {
+    showTintUpdated () {
+      return this.$store.state.showTint
+    },
     imagesUpdated () {
       return this.$store.state.images
+    },
+    tintUpdated () {
+      return this.$store.state.tintHue
     }
   },
   watch: {
-    imagesUpdated () {
-      if (this.$store.state.images.length >= 0) {
-        for (let i = 0; i < this.$store.state.images.length; i++) {
-          this.s.loadImage(this.$store.state.images[i].src, this.imageReady)
+    imagesUpdated (storeImage) {
+      if (storeImage.length >= 0) {
+        for (let i = 0; i < storeImage.length; i++) {
+          this.s.loadImage(
+            storeImage[i].src,
+            this.imageReady
+          )
         }
       }
+    },
+    tintUpdated (hue) {
+      this.tintVisible = true
+      this.tintHue = hue
+      this.draw(this.s)
+      this.$store.commit('updateTintVisibility', true)
+    },
+    showTintUpdated (visible) {
+      this.tintVisible = visible
+      this.draw(this.s)
     }
   },
   methods: {
@@ -36,9 +57,45 @@ export default {
       s.createCanvas(500, 500)
       s.noLoop()
     },
+    HSLToRGB (h, s, l) {
+      // Must be fractions of 1
+      s /= 100
+      l /= 100
+
+      const c = (1 - Math.abs(2 * l - 1)) * s
+      const x = c * (1 - Math.abs((h / 60) % 2 - 1))
+      const m = l - c / 2
+      let r = 0
+      let g = 0
+      let b = 0
+      if (h >= 0 && h < 60) {
+        r = c; g = x; b = 0
+      } else if (h >= 60 && h < 120) {
+        r = x; g = c; b = 0
+      } else if (h >= 120 && h < 180) {
+        r = 0; g = c; b = x
+      } else if (h >= 180 && h < 240) {
+        r = 0; g = x; b = c
+      } else if (h >= 240 && h < 300) {
+        r = x; g = 0; b = c
+      } else if (h >= 300 && h < 360) {
+        r = c; g = 0; b = x
+      }
+      r = Math.round((r + m) * 255)
+      g = Math.round((g + m) * 255)
+      b = Math.round((b + m) * 255)
+
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    },
     draw (s) {
       s.background('green')
       s.text('Hello p5!', 20, 20)
+      if (this.tintVisible) {
+        s.tint(this.HSLToRGB(this.tintHue, 100, 50))
+      } else {
+        s.noTint()
+      }
+
       this.images.forEach(image => {
         if (image.height > image.width) {
           image.resize(s.width, 0)

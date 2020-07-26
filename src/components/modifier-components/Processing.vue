@@ -2,25 +2,22 @@
   <div id="Processing">
     <div class="controls_showTint flex-row">
       <div>
-        <input type="checkbox" id="showTint" :value="tintVisibility" @input="updateTintVisibility">
+        <input type="checkbox" id="showTint" v-model="tintVisibility">
         <label for="showTint">Tint Image</label>
       </div>
 
       <div class="controls__color hide">
-        <input id="color-input" type="color" value="#7f3af6">
-      </div>
-
-      <div class="controls_showImage">
-        <input type="checkbox" id="showImage" :value="imageVisibility" @input="updateImageVisibility">
-        <label for="checkbox">Image is visible</label>
+        <color-picker :initially-collapsed="true" @select="updateTint" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ColorPicker from '@radial-color-picker/vue-color-picker'
 
 export default {
+  components: { ColorPicker },
   name: 'Processing',
   props: [
     'index',
@@ -31,20 +28,28 @@ export default {
   data () {
     return {
       imageVisibility: this.showImage,
-      tintVisibility: this.showTint,
-      imageTint: this.tint
+      imageTint: this.tint,
+      color: 'hsl(0, 100%, 50%)'
     }
   },
   methods: {
-    updateImageVisibility (e) {
-      this.$store.commit('updateImageVisibility', this.index)
-    },
-    updateTintVisibility (e) {
-      this.$store.commit('updateTintVisibility', this.index)
-    },
-    updateTint (e) {
-      this.$store.commit('updateTint', this.index)
+    updateTint (hue) {
+      this.$store.commit('updateTint', hue)
+    }
+  },
+  computed: {
+    tintVisibility: {
+      get () {
+        return this.$store.state.showTint
+      },
+      set (value) {
+        this.$store.commit('updateTintVisibility', value)
+      }
     }
   }
 }
 </script>
+
+<style>
+  @import '~@radial-color-picker/vue-color-picker/dist/vue-color-picker.min.css';
+</style>

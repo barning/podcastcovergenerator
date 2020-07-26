@@ -37,7 +37,6 @@ export default {
         const obj = {}
         obj.src = image
         obj.showLogo = false
-        obj.showTint = false
         obj.position = null
         obj.scale = 1
 

@@ -5,10 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    tintHue: {},
+    showTint: false,
     images: [
     ]
   },
   mutations: {
+    updateTintVisibility (state, visibility) {
+      state.showTint = visibility
+    },
+    updateTint (state, hue) {
+      state.tintHue = hue
+    },
     addImage (state, Image) {
       state.images.push(Image)
     },
