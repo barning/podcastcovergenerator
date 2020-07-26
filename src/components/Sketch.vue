@@ -27,6 +27,9 @@ export default {
     },
     tintUpdated () {
       return this.$store.state.tintHue
+    },
+    imageIsActive () {
+      return this.$store.state.activeInArray
     }
   },
   watch: {
@@ -49,6 +52,9 @@ export default {
     showTintUpdated (visible) {
       this.tintVisible = visible
       this.draw(this.s)
+    },
+    imageIsActive (i) {
+      console.log(this.images[i])
     }
   },
   methods: {
@@ -90,20 +96,23 @@ export default {
     draw (s) {
       s.background('green')
       s.text('Hello p5!', 20, 20)
+
       if (this.tintVisible) {
         s.tint(this.HSLToRGB(this.tintHue, 100, 50))
       } else {
         s.noTint()
       }
 
-      this.images.forEach(image => {
-        if (image.height > image.width) {
-          image.resize(s.width, 0)
-        } else {
-          image.resize(0, s.height)
-        }
-        s.image(image, 0, 0)
-      })
+      const cover = this.images[this.images.length - 1]
+
+      if (!cover) return
+
+      if (cover.height > cover.width) {
+        cover.resize(s.width, 0)
+      } else {
+        cover.resize(0, s.height)
+      }
+      s.image(cover, 0, 0)
     },
     imageReady (img) {
       this.images.push(img)
