@@ -3,9 +3,10 @@ var sass = require('gulp-sass');
 var rollupStream = require('@rollup/stream');
 var source = require('vinyl-source-stream');
 
-var resolve = require('@rollup/plugin-node-resolve');
-var babel = require('rollup-plugin-babel');
+// const { nodeResolve } = require('@rollup/plugin-node-resolve');
 var commonjs = require('@rollup/plugin-commonjs');
+var { nodeResolve } = require('@rollup/plugin-node-resolve');
+var babel = require('rollup-plugin-babel');
 var terser = require('rollup-plugin-terser').terser;
 
 var browserSync = require('browser-sync');
@@ -23,7 +24,7 @@ gulp.task('rollup', () => {
             format: 'iife',
         },
         plugins: [
-            resolve(
+            nodeResolve(
                 {
                     mainFields: ['module', 'main']
                 }

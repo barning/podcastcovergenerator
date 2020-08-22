@@ -1,4 +1,4 @@
 var p5 = require('p5');
-import { s } from './sketch';
+var { s } = require ('./sketch');
 
 new p5(s);
