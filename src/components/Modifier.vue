@@ -22,9 +22,6 @@ export default {
     'index'
   ],
   computed: {
-    activeImage () {
-      return this.$store.getters.activeImage
-    }
   }
 }
 </script>

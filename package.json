@@ -14,6 +14,7 @@
     "vue": "^2.6.11",
     "vue-p5": "^0.8.3",
     "vue-picture-input": "^2.1.6",
+    "vue-slider-component": "^3.2.5",
     "vuex": "^3.1.3"
   },
   "devDependencies": {

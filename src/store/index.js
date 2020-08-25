@@ -21,14 +21,6 @@ export default new Vuex.Store({
     addImage (state, Image) {
       state.images.push(Image)
     },
-    setAllImagesInactive (state) {
-      state.images.forEach(image => {
-        image.active = false
-      })
-    },
-    setImageActive (state, index) {
-      state.activeInArray = index
-    },
     deleteItem (state, index) {
       state.images.splice(index, 1)
     },
@@ -73,11 +65,20 @@ export default new Vuex.Store({
         }
       }
       state.images.splice(newIndex, 0, state.images.splice(index, 1)[0])
+    },
+    setItemActive (state, index) {
+      state.images.forEach(element => {
+        Vue.set(element, 'isActive', false)
+      })
+      Vue.set(state.images[index], 'isActive', true)
     }
   },
   getters: {
-    imageSrc: state => {
-      return state.images.filter(image => image.src)
+    imageIsActive: state => {
+      return state.images.filter(image => image.isActive)
+    },
+    imageScale: state => {
+      return state.images.filter(image => image.scale)
     }
   },
   actions: {

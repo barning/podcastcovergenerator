@@ -1,8 +1,9 @@
 <template>
   <div class="image-layers" id="ImageLayers">
     <ul>
-      <li v-for="(item, index) in imageSrc" :key="item.src">
-        <div v-on:click="setItemActive(index)" class="image-layers__layer">
+      <li v-for="(item, index) in imageSrc" :key="index">
+        <input v-model="imageSrc" name="setActive" :value="index" type="radio">
+        <div class="image-layers__layer">
           <img :src="item.src">
         </div>
         <div class="object-modifier">
@@ -19,15 +20,16 @@
 export default {
   name: 'ImageLayers',
   computed: {
-    imageSrc () {
-      return this.$store.getters.imageSrc
+    imageSrc: {
+      get () {
+        return this.$store.state.images
+      },
+      set (i) {
+        this.$store.commit('setItemActive', i)
+      }
     }
   },
   methods: {
-    setItemActive (i) {
-      this.$store.commit('setAllImagesInactive')
-      this.$store.commit('setImageActive', i)
-    },
     deleteElement (i) {
       this.$store.commit('deleteItem', i)
     },
@@ -44,6 +46,8 @@ export default {
 <style lang="scss">
 .image-layers {
   ul {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
     margin: 0;
     padding: 0;

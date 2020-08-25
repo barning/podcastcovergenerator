@@ -4,6 +4,7 @@
 
 <script>
 import VueP5 from 'vue-p5'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Sketch',
@@ -19,6 +20,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'imageScale'
+    ]),
     showTintUpdated () {
       return this.$store.state.showTint
     },
@@ -103,16 +107,18 @@ export default {
         s.noTint()
       }
 
-      const cover = this.images[this.images.length - 1]
+      for (let i = 0; i < this.images.length; i++) {
+        const cover = this.images[i]
 
-      if (!cover) return
+        if (cover.height > cover.width) {
+          cover.resize(s.width, 0)
+        } else {
+          cover.resize(0, s.height)
+        }
 
-      if (cover.height > cover.width) {
-        cover.resize(s.width, 0)
-      } else {
-        cover.resize(0, s.height)
+        s.image(cover, 0, 0)
+        console.log(this.imageScale[i].scale)
       }
-      s.image(cover, 0, 0)
     },
     imageReady (img) {
       this.images.push(img)
