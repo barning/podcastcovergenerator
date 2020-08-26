@@ -80,7 +80,6 @@ export default new Vuex.Store({
       Vue.set(state.images[index], 'isActive', true)
     },
     isLogo (state, index) {
-      console.log(index)
       state.images.forEach(element => {
         Vue.set(element, 'isLogo', false)
       })
