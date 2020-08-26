@@ -21,7 +21,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'imageScale'
+      'imageScale',
+      'imageIsLogo'
     ]),
     showTintUpdated () {
       return this.$store.state.showTint
@@ -62,6 +63,9 @@ export default {
       console.log(this.images[i])
     },
     imageScale () {
+      this.draw(this.s)
+    },
+    imageIsLogo () {
       this.draw(this.s)
     }
   },
@@ -121,6 +125,12 @@ export default {
           element.resize(s.width, 0)
         } else {
           element.resize(0, s.height)
+        }
+
+        if (element.isLogo === i) {
+          console.log(element.isLogo)
+          s.noTint()
+          // TODO: Should be working
         }
 
         if (scale) {

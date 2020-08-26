@@ -6,7 +6,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tintHue: {},
-    activeInArray: null,
     showTint: false,
     images: [
     ]
@@ -79,6 +78,13 @@ export default new Vuex.Store({
         Vue.set(element, 'isActive', false)
       })
       Vue.set(state.images[index], 'isActive', true)
+    },
+    isLogo (state, index) {
+      console.log(index)
+      state.images.forEach(element => {
+        Vue.set(element, 'isLogo', false)
+      })
+      Vue.set(state.images[index], 'isLogo', true)
     }
   },
   getters: {
@@ -87,6 +93,9 @@ export default new Vuex.Store({
     },
     imageScale: state => {
       return state.images.filter(image => image.scale)
+    },
+    imageIsLogo: state => {
+      return state.images.filter(image => image.isLogo)
     }
   },
   actions: {

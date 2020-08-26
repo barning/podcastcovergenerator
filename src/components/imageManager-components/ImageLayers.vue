@@ -10,6 +10,7 @@
           <button v-on:click="moveElementUp(index)">Up</button>
           <button v-on:click="moveElementDown(index)">Down</button>
           <button v-on:click="deleteElement(index)">Delete</button>
+          <input v-model="imageIsLogo" name="isLogo" :value="index" type="radio">
         </div>
       </li>
     </ul>
@@ -26,6 +27,14 @@ export default {
       },
       set (i) {
         this.$store.commit('setItemActive', i)
+      }
+    },
+    imageIsLogo: {
+      get () {
+        return this.$store.state.images
+      },
+      set (i) {
+        this.$store.commit('isLogo', i)
       }
     }
   },

@@ -36,7 +36,7 @@ export default {
         console.log('Picture loaded.')
         const obj = {}
         obj.src = image
-        obj.showLogo = false
+        obj.isLogo = false
         obj.position = null
         obj.scale = 50
 
