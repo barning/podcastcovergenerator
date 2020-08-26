@@ -38,7 +38,7 @@ export default {
         obj.src = image
         obj.showLogo = false
         obj.position = null
-        obj.scale = 1
+        obj.scale = 50
 
         this.$store.commit('addImage', obj)
         this.$refs.pictureInput.removeImage()

@@ -39,6 +39,7 @@ export default {
   watch: {
     imagesUpdated (storeImage) {
       if (storeImage.length >= 0) {
+        this.images = []
         for (let i = 0; i < storeImage.length; i++) {
           this.s.loadImage(
             storeImage[i].src,
@@ -59,6 +60,9 @@ export default {
     },
     imageIsActive (i) {
       console.log(this.images[i])
+    },
+    imageScale () {
+      this.draw(this.s)
     }
   },
   methods: {
@@ -108,16 +112,23 @@ export default {
       }
 
       for (let i = 0; i < this.images.length; i++) {
-        const cover = this.images[i]
+        const element = this.images[i]
+        const scale = this.imageScale[i]
 
-        if (cover.height > cover.width) {
-          cover.resize(s.width, 0)
+        s.imageMode(s.CENTER)
+
+        if (element.height > element.width) {
+          element.resize(s.width, 0)
         } else {
-          cover.resize(0, s.height)
+          element.resize(0, s.height)
         }
 
-        s.image(cover, 0, 0)
-        console.log(this.imageScale[i].scale)
+        if (scale) {
+          const scaling = s.map(scale.scale, 1, 100, 0.1, 2)
+          s.image(element, s.width / 2, s.height / 2, scaling * s.width, scaling * element.height * s.width / element.width)
+        } else {
+          s.image(element, s.width / 2, s.height / 2)
+        }
       }
     },
     imageReady (img) {

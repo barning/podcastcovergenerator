@@ -44,6 +44,10 @@ export default new Vuex.Store({
         }
       }
       state.images.splice(newIndex, 0, state.images.splice(index, 1)[0])
+
+      state.images.forEach(element => {
+        Vue.set(element, 'isActive', false)
+      })
     },
     moveItemDown (state, index) {
       let newIndex = index + 1
@@ -65,6 +69,10 @@ export default new Vuex.Store({
         }
       }
       state.images.splice(newIndex, 0, state.images.splice(index, 1)[0])
+
+      state.images.forEach(element => {
+        Vue.set(element, 'isActive', false)
+      })
     },
     setItemActive (state, index) {
       state.images.forEach(element => {
