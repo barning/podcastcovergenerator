@@ -3,7 +3,6 @@ var sass = require('gulp-sass');
 var rollupStream = require('@rollup/stream');
 var source = require('vinyl-source-stream');
 
-// const { nodeResolve } = require('@rollup/plugin-node-resolve');
 var commonjs = require('@rollup/plugin-commonjs');
 var { nodeResolve } = require('@rollup/plugin-node-resolve');
 var babel = require('rollup-plugin-babel');
